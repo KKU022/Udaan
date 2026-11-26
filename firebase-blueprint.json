@@ -1,0 +1,523 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Core authenticated user account with role and status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "email": { "type": "string", "format": "email", "maxLength": 200 },
+        "role": { "type": "string", "enum": ["student", "company", "admin"] },
+        "accountStatus": { "type": "string", "enum": ["active", "deactivated", "suspended"] },
+        "emailVerified": { "type": "boolean" },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "isDemo": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "fullName", "email", "role", "accountStatus", "emailVerified", "createdAt", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Authoritative registry of verified college administrators",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 200 },
+        "grantedBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "grantedBy", "createdAt"]
+    },
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Private student profile containing PII and full academic records",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "email": { "type": "string", "format": "email", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "college": { "type": "string", "maxLength": 180 },
+        "degree": { "type": "string", "maxLength": 120 },
+        "branch": { "type": "string", "maxLength": 120 },
+        "semester": { "type": "number" },
+        "graduationYear": { "type": "number" },
+        "cgpa": { "type": "number" },
+        "skills": { "type": "array" },
+        "interests": { "type": "array" },
+        "projects": { "type": "array" },
+        "certifications": { "type": "array" },
+        "experience": { "type": "array" },
+        "linkedinUrl": { "type": "string", "maxLength": 300 },
+        "githubUrl": { "type": "string", "maxLength": 300 },
+        "portfolioUrl": { "type": "string", "maxLength": 300 },
+        "about": { "type": "string", "maxLength": 2000 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "resumeId": { "type": "string", "maxLength": 128 },
+        "resumeName": { "type": "string", "maxLength": 200 },
+        "resumeUrl": { "type": "string", "maxLength": 1000 },
+        "resumeUpdatedAt": { "type": "string", "maxLength": 64 },
+        "showContactToRecruiters": { "type": "boolean" },
+        "profileCompletion": { "type": "number" },
+        "isDemo": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "fullName", "email", "college", "degree", "branch", "semester", "graduationYear", "cgpa", "skills", "profileCompletion", "updatedAt"]
+    },
+    "StudentPublicProfile": {
+      "title": "StudentPublicProfile",
+      "description": "Recruiter-facing student portfolio without sensitive private PII",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "college": { "type": "string", "maxLength": 180 },
+        "degree": { "type": "string", "maxLength": 120 },
+        "branch": { "type": "string", "maxLength": 120 },
+        "semester": { "type": "number" },
+        "graduationYear": { "type": "number" },
+        "cgpa": { "type": "number" },
+        "skills": { "type": "array" },
+        "interests": { "type": "array" },
+        "projects": { "type": "array" },
+        "certifications": { "type": "array" },
+        "experience": { "type": "array" },
+        "headline": { "type": "string", "maxLength": 160 },
+        "linkedinUrl": { "type": "string", "maxLength": 300 },
+        "githubUrl": { "type": "string", "maxLength": 300 },
+        "portfolioUrl": { "type": "string", "maxLength": 300 },
+        "socialLinks": { "type": "object" },
+        "publicSlug": { "type": "string", "maxLength": 128 },
+        "isPassportPublic": { "type": "boolean" },
+        "achievements": { "type": "array" },
+        "certificates": { "type": "array" },
+        "skillGroups": { "type": "object" },
+        "about": { "type": "string", "maxLength": 2000 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "profileCompletion": { "type": "number" },
+        "isDemo": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "fullName", "college", "degree", "branch", "semester", "graduationYear", "cgpa", "skills", "profileCompletion", "updatedAt"]
+    },
+    "CareerPassport": {
+      "title": "CareerPassport",
+      "description": "Public shareable student Career Passport strictly omitting private PII (email/phone)",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "isPublic": { "type": "boolean" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "headline": { "type": "string", "maxLength": 160 },
+        "college": { "type": "string", "maxLength": 180 },
+        "degree": { "type": "string", "maxLength": 120 },
+        "branch": { "type": "string", "maxLength": 120 },
+        "graduationYear": { "type": "number" },
+        "cgpa": { "type": "number" },
+        "about": { "type": "string", "maxLength": 2000 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "skills": { "type": "array" },
+        "skillGroups": { "type": "object" },
+        "projects": { "type": "array" },
+        "experience": { "type": "array" },
+        "achievements": { "type": "array" },
+        "certificates": { "type": "array" },
+        "socialLinks": { "type": "object" },
+        "resumeAvailable": { "type": "boolean" },
+        "profileCompletion": { "type": "number" },
+        "isDemo": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "studentId", "isPublic", "fullName", "college", "degree", "branch", "graduationYear", "cgpa", "skills", "resumeAvailable", "profileCompletion", "updatedAt"]
+    },
+    "ResumeDocument": {
+      "title": "ResumeDocument",
+      "description": "Student uploaded PDF resume metadata and access scope",
+      "type": "object",
+      "properties": {
+        "resumeId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fileName": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "fileSize": { "type": "number" },
+        "mimeType": { "type": "string", "maxLength": 80 },
+        "storagePath": { "type": "string", "maxLength": 400 },
+        "downloadUrl": { "type": "string", "maxLength": 1000 },
+        "dataUrl": { "type": "string", "maxLength": 900000 },
+        "sharedWithCompanies": { "type": "array" },
+        "isDemo": { "type": "boolean" },
+        "uploadedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["resumeId", "studentId", "fileName", "fileSize", "mimeType", "sharedWithCompanies", "uploadedAt"]
+    },
+    "CompanyProfile": {
+      "title": "CompanyProfile",
+      "description": "Private recruiter and company profile with admin-controlled verification status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "officialEmail": { "type": "string", "format": "email", "maxLength": 200 },
+        "contactPerson": { "type": "string", "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "website": { "type": "string", "maxLength": 300 },
+        "industry": { "type": "string", "maxLength": 120 },
+        "companySize": { "type": "string", "maxLength": 60 },
+        "headquarters": { "type": "string", "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 2500 },
+        "linkedinUrl": { "type": "string", "maxLength": 300 },
+        "githubUrl": { "type": "string", "maxLength": 300 },
+        "twitterUrl": { "type": "string", "maxLength": 300 },
+        "instagramUrl": { "type": "string", "maxLength": 300 },
+        "logoText": { "type": "string", "maxLength": 6 },
+        "verificationStatus": { "type": "string", "enum": ["pending", "verified", "rejected", "suspended"] },
+        "verificationReason": { "type": "string", "maxLength": 600 },
+        "verifiedAt": { "type": "string", "maxLength": 64 },
+        "verifiedBy": { "type": "string", "maxLength": 128 },
+        "isDemo": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "companyName", "officialEmail", "contactPerson", "industry", "verificationStatus", "createdAt", "updatedAt"]
+    },
+    "CompanyPublicProfile": {
+      "title": "CompanyPublicProfile",
+      "description": "Publicly visible directory card for verified companies",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "website": { "type": "string", "maxLength": 300 },
+        "linkedinUrl": { "type": "string", "maxLength": 300 },
+        "githubUrl": { "type": "string", "maxLength": 300 },
+        "twitterUrl": { "type": "string", "maxLength": 300 },
+        "instagramUrl": { "type": "string", "maxLength": 300 },
+        "industry": { "type": "string", "maxLength": 120 },
+        "companySize": { "type": "string", "maxLength": 60 },
+        "headquarters": { "type": "string", "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 2500 },
+        "logoText": { "type": "string", "maxLength": 6 },
+        "verificationStatus": { "type": "string", "enum": ["pending", "verified", "rejected", "suspended"] },
+        "isDemo": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "companyName", "industry", "verificationStatus", "updatedAt"]
+    },
+    "Internship": {
+      "title": "Internship",
+      "description": "Internship posting created by a verified company and approved by an admin",
+      "type": "object",
+      "properties": {
+        "internshipId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "maxLength": 160 },
+        "companyIndustry": { "type": "string", "maxLength": 120 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "category": { "type": "string", "maxLength": 80 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "responsibilities": { "type": "string", "maxLength": 3000 },
+        "skills": { "type": "array" },
+        "eligibilityText": { "type": "string", "maxLength": 1000 },
+        "minCgpa": { "type": "number" },
+        "eligibleBranches": { "type": "array" },
+        "eligibleSemesters": { "type": "array" },
+        "eligibleGradYears": { "type": "array" },
+        "duration": { "type": "string", "maxLength": 60 },
+        "isPaid": { "type": "boolean" },
+        "stipendAmount": { "type": "number" },
+        "stipendDisplay": { "type": "string", "maxLength": 80 },
+        "location": { "type": "string", "maxLength": 140 },
+        "workMode": { "type": "string", "enum": ["Remote", "Hybrid", "On-site"] },
+        "openings": { "type": "number" },
+        "deadline": { "type": "string", "maxLength": 40 },
+        "startDate": { "type": "string", "maxLength": 40 },
+        "requiredDocuments": { "type": "array" },
+        "contactInstructions": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["draft", "pending_approval", "published", "rejected", "closed", "expired"] },
+        "approvalStatus": { "type": "string", "enum": ["draft", "pending", "approved", "rejected"] },
+        "rejectionReason": { "type": "string", "maxLength": 600 },
+        "applicantsCount": { "type": "number" },
+        "isDemo": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["internshipId", "companyId", "companyName", "title", "category", "description", "skills", "duration", "isPaid", "stipendAmount", "stipendDisplay", "location", "workMode", "openings", "deadline", "status", "approvalStatus", "applicantsCount", "createdAt", "updatedAt"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Student application for an internship with immutable ownership and tracked history",
+      "type": "object",
+      "properties": {
+        "applicationId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipTitle": { "type": "string", "maxLength": 160 },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "studentEmail": { "type": "string", "maxLength": 200 },
+        "studentCollege": { "type": "string", "maxLength": 180 },
+        "studentBranch": { "type": "string", "maxLength": 120 },
+        "studentCgpa": { "type": "number" },
+        "studentSkills": { "type": "array" },
+        "companyId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "maxLength": 160 },
+        "resumeId": { "type": "string", "maxLength": 128 },
+        "resumeName": { "type": "string", "maxLength": 200 },
+        "resumeUrl": { "type": "string", "maxLength": 1000 },
+        "coverLetter": { "type": "string", "maxLength": 3000 },
+        "status": { "type": "string", "enum": ["Applied", "Under Review", "Shortlisted", "Interview Scheduled", "Selected", "Rejected", "Withdrawn"] },
+        "statusHistory": { "type": "array" },
+        "joiningInfo": { "type": "string", "maxLength": 1000 },
+        "isDemo": { "type": "boolean" },
+        "appliedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["applicationId", "internshipId", "internshipTitle", "studentId", "studentName", "companyId", "companyName", "status", "statusHistory", "appliedAt", "updatedAt"]
+    },
+    "Interview": {
+      "title": "Interview",
+      "description": "Interview scheduled between a recruiter and an applicant",
+      "type": "object",
+      "properties": {
+        "interviewId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "applicationId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "companyId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "maxLength": 160 },
+        "internshipId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipTitle": { "type": "string", "maxLength": 160 },
+        "title": { "type": "string", "maxLength": 160 },
+        "interviewDate": { "type": "string", "maxLength": 32 },
+        "startTime": { "type": "string", "maxLength": 20 },
+        "endTime": { "type": "string", "maxLength": 20 },
+        "mode": { "type": "string", "enum": ["Online", "In-Person", "Phone"] },
+        "meetingLink": { "type": "string", "maxLength": 500 },
+        "venue": { "type": "string", "maxLength": 300 },
+        "interviewer": { "type": "string", "maxLength": 120 },
+        "instructions": { "type": "string", "maxLength": 1500 },
+        "status": { "type": "string", "enum": ["Scheduled", "Completed", "Rescheduled", "Cancelled"] },
+        "isDemo": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["interviewId", "applicationId", "studentId", "studentName", "companyId", "companyName", "internshipId", "internshipTitle", "title", "interviewDate", "startTime", "endTime", "mode", "interviewer", "status", "createdAt", "updatedAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Persistent cross-role in-app notification",
+      "type": "object",
+      "properties": {
+        "notificationId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "recipientId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "senderId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "maxLength": 160 },
+        "message": { "type": "string", "maxLength": 600 },
+        "type": { "type": "string", "enum": ["application", "status", "interview", "verification", "approval", "progress", "system"] },
+        "relatedEntityId": { "type": "string", "maxLength": 128 },
+        "targetRoute": { "type": "string", "maxLength": 200 },
+        "read": { "type": "boolean" },
+        "isDemo": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["notificationId", "recipientId", "senderId", "title", "message", "type", "read", "createdAt"]
+    },
+    "SavedInternship": {
+      "title": "SavedInternship",
+      "description": "Student bookmarked internship record",
+      "type": "object",
+      "properties": {
+        "savedId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipTitle": { "type": "string", "maxLength": 160 },
+        "companyName": { "type": "string", "maxLength": 160 },
+        "location": { "type": "string", "maxLength": 140 },
+        "workMode": { "type": "string", "maxLength": 40 },
+        "stipendDisplay": { "type": "string", "maxLength": 80 },
+        "deadline": { "type": "string", "maxLength": 40 },
+        "savedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["savedId", "studentId", "internshipId", "internshipTitle", "companyName", "savedAt"]
+    },
+    "InternshipProgress": {
+      "title": "InternshipProgress",
+      "description": "Active and completed internship milestones, weekly logs, and mentor details",
+      "type": "object",
+      "properties": {
+        "progressId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "applicationId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "companyId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "maxLength": 160 },
+        "internshipId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipTitle": { "type": "string", "maxLength": 160 },
+        "mentorName": { "type": "string", "maxLength": 120 },
+        "mentorEmail": { "type": "string", "maxLength": 200 },
+        "startDate": { "type": "string", "maxLength": 40 },
+        "endDate": { "type": "string", "maxLength": 40 },
+        "actualCompletionDate": { "type": "string", "maxLength": 40 },
+        "progressStatus": { "type": "string", "enum": ["Not Started", "In Progress", "Completed", "Incomplete"] },
+        "milestones": { "type": "array" },
+        "weeklyUpdates": { "type": "array" },
+        "documents": { "type": "array" },
+        "completionConfirmed": { "type": "boolean" },
+        "isDemo": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["progressId", "applicationId", "studentId", "studentName", "companyId", "companyName", "internshipId", "internshipTitle", "progressStatus", "milestones", "weeklyUpdates", "documents", "completionConfirmed", "createdAt", "updatedAt"]
+    },
+    "Feedback": {
+      "title": "Feedback",
+      "description": "Recruiter evaluation feedback for an interview or internship completion",
+      "type": "object",
+      "properties": {
+        "feedbackId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "applicationId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "internshipTitle": { "type": "string", "maxLength": 160 },
+        "studentId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "companyId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "companyName": { "type": "string", "maxLength": 160 },
+        "stage": { "type": "string", "enum": ["interview", "midterm", "final"] },
+        "rating": { "type": "number" },
+        "strengths": { "type": "string", "maxLength": 1200 },
+        "improvements": { "type": "string", "maxLength": 1200 },
+        "comments": { "type": "string", "maxLength": 2000 },
+        "recommendation": { "type": "string", "enum": ["Strong Hire", "Hire", "Hold", "No Hire", "Completed"] },
+        "isDemo": { "type": "boolean" },
+        "submittedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["feedbackId", "applicationId", "internshipId", "studentId", "companyId", "stage", "rating", "comments", "recommendation", "submittedAt"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Immutable audit log of administrative and workflow events",
+      "type": "object",
+      "properties": {
+        "activityId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "actorId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "actorName": { "type": "string", "maxLength": 120 },
+        "actorRole": { "type": "string", "enum": ["student", "company", "admin"] },
+        "action": { "type": "string", "maxLength": 160 },
+        "entityType": { "type": "string", "maxLength": 60 },
+        "entityId": { "type": "string", "maxLength": 128 },
+        "details": { "type": "string", "maxLength": 600 },
+        "isDemo": { "type": "boolean" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["activityId", "actorId", "actorName", "actorRole", "action", "entityType", "entityId", "timestamp"]
+    },
+    "PlatformStats": {
+      "title": "PlatformStats",
+      "description": "Public aggregate metrics summary for landing page",
+      "type": "object",
+      "properties": {
+        "studentsCount": { "type": "number" },
+        "verifiedCompaniesCount": { "type": "number" },
+        "activeInternshipsCount": { "type": "number" },
+        "placementsCount": { "type": "number" },
+        "demoRecordsIncluded": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["studentsCount", "verifiedCompaniesCount", "activeInternshipsCount", "placementsCount", "updatedAt"]
+    },
+    "SystemSettings": {
+      "title": "SystemSettings",
+      "description": "College administrator platform configuration",
+      "type": "object",
+      "properties": {
+        "institutionName": { "type": "string", "maxLength": 180 },
+        "academicYear": { "type": "string", "maxLength": 40 },
+        "institutionWebsite": { "type": "string", "maxLength": 300 },
+        "institutionLinkedin": { "type": "string", "maxLength": 300 },
+        "contactEmail": { "type": "string", "maxLength": 200 },
+        "contactPhone": { "type": "string", "maxLength": 40 },
+        "requireCompanyVerification": { "type": "boolean" },
+        "requireInternshipApproval": { "type": "boolean" },
+        "maxActiveApplicationsPerStudent": { "type": "number" },
+        "allowWithdrawBeforeInterview": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["institutionName", "academicYear", "requireCompanyVerification", "requireInternshipApproval", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User accounts with strict PII owner/admin isolation and immutable RBAC roles"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Trusted administrator lookup table"
+    },
+    "/studentProfiles/{studentId}": {
+      "schema": { "$ref": "#/entities/StudentProfile" },
+      "description": "Private student profile with phone/email PII (owner + admin only)"
+    },
+    "/studentPublicProfiles/{studentId}": {
+      "schema": { "$ref": "#/entities/StudentPublicProfile" },
+      "description": "Recruiter-safe public academic portfolio"
+    },
+    "/careerPassports/{slug}": {
+      "schema": { "$ref": "#/entities/CareerPassport" },
+      "description": "Public shareable Career Passport (get allowed only when isPublic == true; PII strictly excluded)"
+    },
+    "/resumes/{resumeId}": {
+      "schema": { "$ref": "#/entities/ResumeDocument" },
+      "description": "Uploaded resume files with company sharing allowlist"
+    },
+    "/companyProfiles/{companyId}": {
+      "schema": { "$ref": "#/entities/CompanyProfile" },
+      "description": "Private company profiles with admin-only verification status transitions"
+    },
+    "/companiesPublic/{companyId}": {
+      "schema": { "$ref": "#/entities/CompanyPublicProfile" },
+      "description": "Public directory cards for verified companies"
+    },
+    "/internships/{internshipId}": {
+      "schema": { "$ref": "#/entities/Internship" },
+      "description": "Internship opportunities; only approved published records are publicly discoverable"
+    },
+    "/applications/{applicationId}": {
+      "schema": { "$ref": "#/entities/Application" },
+      "description": "Internship applications scoped to studentId, companyId, and admin"
+    },
+    "/interviews/{interviewId}": {
+      "schema": { "$ref": "#/entities/Interview" },
+      "description": "Scheduled interviews visible only to student, hosting company, and admin"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Persistent in-app notifications visible only to recipient or admin"
+    },
+    "/savedInternships/{savedId}": {
+      "schema": { "$ref": "#/entities/SavedInternship" },
+      "description": "Student bookmarked internships"
+    },
+    "/internshipProgress/{progressId}": {
+      "schema": { "$ref": "#/entities/InternshipProgress" },
+      "description": "Post-selection internship milestones, logs, and completion records"
+    },
+    "/feedback/{feedbackId}": {
+      "schema": { "$ref": "#/entities/Feedback" },
+      "description": "Recruiter evaluation and final internship feedback"
+    },
+    "/activityLogs/{activityId}": {
+      "schema": { "$ref": "#/entities/ActivityLog" },
+      "description": "Append-only audit trail readable exclusively by administrators"
+    },
+    "/platformStats/{statId}": {
+      "schema": { "$ref": "#/entities/PlatformStats" },
+      "description": "Public aggregate metrics summary for landing page"
+    },
+    "/systemSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SystemSettings" },
+      "description": "Administrator-controlled platform policy settings"
+    }
+  }
+}

@@ -1,0 +1,197 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  color-scheme: light;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #EBEBEB;
+  --bg-muted: #EBEBEB;
+  --border-color: #D4D4D4;
+  --border-subtle: #E5E5E5;
+  --text-primary: #111111;
+  --text-secondary: #525252;
+  --text-muted: #737373;
+  --action-bg: #111111;
+  --action-text: #FFFFFF;
+  --action-hover: #262626;
+  --focus-ring: rgba(17, 17, 17, 0.2);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.025);
+  --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --overlay-backdrop: rgba(9, 9, 9, 0.55);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg-primary: #090909;
+  --bg-secondary: #111111;
+  --bg-card: #171717;
+  --bg-elevated: #202020;
+  --bg-muted: #202020;
+  --border-color: #303030;
+  --border-subtle: #242424;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A3A3A3;
+  --text-muted: #737373;
+  --action-bg: #FFFFFF;
+  --action-text: #090909;
+  --action-hover: #E5E5E5;
+  --focus-ring: rgba(255, 255, 255, 0.24);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-elevated: 0 16px 44px rgba(0, 0, 0, 0.6);
+  --overlay-backdrop: rgba(0, 0, 0, 0.72);
+}
+
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 180ms ease, color 180ms ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Form controls and focus accessibility */
+input,
+select,
+textarea {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* Shared monochromatic primitives */
+.mono-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.mono-surface {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.mono-btn-primary {
+  background-color: var(--action-bg);
+  color: var(--action-text);
+  border-radius: 10px;
+  transition: background-color 150ms ease, transform 150ms ease, opacity 150ms ease;
+}
+
+.mono-btn-primary:hover:not(:disabled) {
+  background-color: var(--action-hover);
+}
+
+.mono-btn-primary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+.mono-btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.mono-btn-secondary:hover:not(:disabled) {
+  background-color: var(--bg-elevated);
+  border-color: var(--text-muted);
+}
+
+.mono-btn-secondary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* Subtle modal & page reveal microinteractions */
+@keyframes udaanFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.udaan-fade-in {
+  animation: udaanFadeIn 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Monochromatic scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

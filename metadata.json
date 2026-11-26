@@ -1,0 +1,8 @@
+{
+  "name": "InternFlow — Internship Management System",
+  "description": "A unified university internship management platform connecting students, verified companies, and college administrators from discovery through completion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

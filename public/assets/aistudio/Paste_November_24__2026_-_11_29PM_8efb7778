@@ -1,0 +1,1490 @@
+# MASTER BUILD PROMPT — INTERNFLOW
+## Full-Stack Internship Management System | Software Engineering Project
+
+Act as a senior full-stack software architect, product designer, database engineer, UI/UX specialist and QA engineer.
+
+Your task is to DESIGN, DEVELOP, INTEGRATE, TEST AND POLISH a complete, functional, production-style web application called **InternFlow — Internship Management System (IMS)**.
+
+This is not a static website, landing-page-only project, UI prototype or collection of disconnected dashboards. Build one complete, interconnected application with a real backend, persistent database, authentication, role-based access control, document management, application workflows, notifications and analytics.
+
+The system must follow the Software Requirements Specification (SRS) for an Internship Management System involving three user categories:
+
+1. Students
+2. Companies / Recruiters
+3. College Administrators
+
+The application must be impressive enough for a university Software Engineering project demonstration while maintaining realistic, maintainable engineering practices.
+
+---
+
+# 1. PRIMARY OBJECTIVE
+
+Create a centralized internship management ecosystem where:
+
+- Students can register, maintain their profiles, discover opportunities, upload resumes, apply for internships and track their progress.
+- Companies can register, create company profiles, publish internship opportunities, review candidates, shortlist applicants, schedule interviews and update selection decisions.
+- Administrators can manage users, verify companies, approve internship postings, monitor applications, track internship completion and generate reports.
+
+Every module must communicate with the same backend and database.
+
+A change made by one role must be reflected in the appropriate dashboards of other roles.
+
+Example:
+
+When a recruiter shortlists a student:
+- The application's status must change in the database.
+- The student must see the updated status in their dashboard.
+- A notification must be generated for the student.
+- The recruiter must see the updated applicant pipeline.
+- The administrator must see the updated application record.
+
+No isolated modules or hardcoded interactions.
+
+# 2. TECHNOLOGY STACK
+
+Use the following architecture, prioritizing fast implementation, stability and easy deployment.
+
+Frontend:
+- React
+- TypeScript
+- Modern component-based architecture
+- Tailwind CSS
+- Lucide React icons
+- React Router
+- Framer Motion for restrained transitions
+- Recharts for analytics
+- React Hook Form and Zod for forms and validation
+
+Backend:
+- Node.js server runtime
+- Secure server-side API endpoints
+- Firebase Authentication
+- Cloud Firestore as the persistent database
+- Firebase Storage for resumes and internship documents
+- Firebase Security Rules for data access control
+
+Additional libraries:
+- date-fns for date handling
+- Sonner or an equivalent toast notification library
+- A lightweight charting library
+- A PDF generation library for reports if practical
+
+Use the Firebase integration available in the development environment. Configure the actual authentication and database connections rather than creating mock services.
+
+Keep API calls and privileged operations on the server where appropriate. Never expose secret credentials in frontend code.
+
+IMPORTANT DATABASE NOTE:
+The initial academic SRS lists MySQL. For this rapid implementation, use Firestore because of the available integrated Firebase provisioning. Keep data models and repository operations modular so a relational MySQL implementation can be substituted later if required. Document this technology decision.
+
+# 3. PRODUCT BRANDING AND VISUAL IDENTITY
+
+Product name: InternFlow
+
+Tagline: From Campus to Career.
+
+Brand personality:
+- Professional
+- Trustworthy
+- Modern
+- Career-oriented
+- Academic but not outdated
+- Premium without being flashy
+
+Design inspiration:
+Create an interface inspired by polished products such as Linear, Stripe, Notion, modern university career platforms and premium recruitment SaaS applications.
+
+DO NOT produce a generic AI-generated dashboard.
+
+Avoid:
+- Excessive gradients
+- Purple-blue AI-style backgrounds everywhere
+- Random floating cards
+- Unnecessary glowing borders
+- Excessive glassmorphism
+- Oversized rounded cards everywhere
+- Excessive animations
+- Emoji-based navigation
+- Fake metrics presented as actual data
+- Generic repeated dashboard layouts
+
+Design system:
+
+Colors:
+- Primary midnight navy: #101C2C
+- Deep background: #0B1422
+- Warm ivory: #F7F6F2
+- Surface white: #FFFFFF
+- Secondary blue: #426A91
+- Muted emerald: #23866A
+- Neutral text: #64748B
+- Border: #E5E7EB
+- Warning amber: #D99B35
+- Error red: #DC5454
+
+Use a consistent design token system.
+
+Typography:
+- Inter or Manrope for interface text
+- A refined serif or editorial font for selected landing-page headings
+
+Interface details:
+- Consistent spacing system
+- Clear typographic hierarchy
+- Proper empty states
+- Skeleton loaders
+- Error states
+- Success feedback
+- Responsive navigation
+- Subtle hover states
+- Consistent buttons and form controls
+- High-quality tables
+- Meaningful charts
+
+Create a distinctive visual identity and ensure that the public website and internal dashboards feel like parts of the same product.
+
+# 4. LANDING PAGE
+
+Build an impressive public-facing landing page.
+
+Navigation:
+- InternFlow logo
+- Home
+- Explore Internships
+- For Students
+- For Companies
+- About
+- Login
+- Get Started
+
+Hero section:
+
+Headline:
+"Your next opportunity starts here."
+
+Supporting text:
+"One connected platform for students, recruiters and institutions to discover talent, manage internships and build meaningful careers."
+
+Primary CTA:
+Explore Opportunities
+
+Secondary CTA:
+Join InternFlow
+
+Visual treatment:
+- Full-width cinematic campus/career-themed video background.
+- Use a genuine muted, looping video asset if available.
+- Add a dark overlay for readable text.
+- Add a graceful static poster and CSS background fallback.
+- Never depend on an unavailable video to render the page.
+- Use a lightweight interactive career-network visualization or restrained 3D geometric element.
+- Add subtle entrance animations.
+- Ensure mobile performance.
+
+Additional landing sections:
+
+A. Platform statistics
+Display database-derived statistics when available:
+- Registered students
+- Verified companies
+- Active internships
+- Successful placements
+
+Do not present fabricated statistics as live platform metrics. If no records exist, use honest zero states or clearly labeled illustrative demo data.
+
+B. How it works
+Three steps:
+1. Create your profile.
+2. Discover and apply.
+3. Get selected and begin your career journey.
+
+C. Featured internships
+Show selected active and approved internships from Firestore.
+
+D. Platform benefits
+Separate benefits for students, recruiters and administrators.
+
+E. Career ecosystem
+A visual explanation of the flow from student registration to internship completion.
+
+F. Testimonials
+Use clearly identified sample/demo testimonials only. Never fabricate real endorsements.
+
+G. Final CTA
+
+H. Footer
+- About
+- Contact
+- Help Center
+- Privacy Policy
+- Terms
+- Social links
+
+# 5. AUTHENTICATION AND ROLE MANAGEMENT
+
+Build a complete authentication system.
+
+Registration options:
+- Student
+- Company / Recruiter
+
+Administrator accounts must be created through a trusted server-side bootstrap process or authorized administrator provisioning. Never allow public users to register as administrators.
+
+Authentication features:
+- Email and password registration
+- Login
+- Logout
+- Forgot password
+- Password reset
+- Email verification where configured
+- Google sign-in where configured
+- Protected routes
+- Role-based redirection
+- Persistent authenticated sessions
+- Account status validation
+
+After login:
+
+Student → Student Dashboard
+
+Company → Recruiter Dashboard
+
+Admin → Admin Dashboard
+
+User registration fields:
+
+Student:
+- Full name
+- Email
+- Password
+- Phone
+- College
+- Course
+- Branch
+- Semester
+- Graduation year
+
+Company:
+- Company name
+- Official email
+- Password
+- Contact person
+- Phone
+- Website
+- Industry
+- Company description
+
+Create a user document in Firestore after successful account creation.
+
+Maintain user roles and account verification status.
+
+Security:
+- Never trust a role supplied by the client.
+- Validate roles on the server.
+- Protect all private routes.
+- Prevent students from accessing recruiter or admin APIs.
+- Prevent recruiters from accessing other companies' private records.
+- Prevent ordinary users from modifying administrator privileges.
+- Validate all incoming requests.
+
+# 6. STUDENT PORTAL
+
+Create a complete student dashboard.
+
+Sidebar:
+- Overview
+- My Profile
+- Explore Internships
+- My Applications
+- Saved Internships
+- Interviews
+- My Documents
+- Internship Progress
+- Notifications
+- Settings
+
+Student dashboard:
+
+Header:
+"Welcome back, [Student Name]"
+
+Show:
+- Profile completion percentage
+- Total applications
+- Under review
+- Shortlisted
+- Interviews scheduled
+- Selected applications
+
+Dashboard sections:
+- Application activity chart
+- Recent applications
+- Recommended internships
+- Upcoming interviews
+- Profile completion reminder
+- Recent notifications
+
+All values must come from actual database records.
+
+## 6.1 Student Profile
+
+Build an editable profile page.
+
+Fields:
+- Profile photograph
+- Full name
+- Email
+- Phone
+- College
+- Degree
+- Branch
+- Current semester
+- Graduation year
+- CGPA
+- Skills
+- Technical interests
+- Projects
+- Certifications
+- Experience
+- LinkedIn URL
+- GitHub URL
+- Portfolio URL
+- About me
+
+Features:
+- Edit profile
+- Save changes
+- Profile completion indicator
+- Input validation
+- Public recruiter-facing profile preview
+- Privacy controls for sensitive personal information
+
+## 6.2 Resume Management
+
+Allow students to:
+- Upload PDF resumes
+- Replace resumes
+- Preview or download uploaded resumes
+- See upload date
+- Delete or replace existing documents
+
+Store files in Firebase Storage.
+
+Validate:
+- File type
+- File size
+- User ownership
+- Upload success and failure
+
+A student should be able to select their saved resume while applying for an internship.
+
+## 6.3 Internship Discovery
+
+Create a polished internship discovery page.
+
+Search by:
+- Internship title
+- Company name
+- Skills
+- Description
+
+Filters:
+- Location
+- Remote / Hybrid / On-site
+- Paid / Unpaid
+- Stipend range
+- Duration
+- Required skills
+- Internship category
+- Application deadline
+
+Sorting:
+- Latest
+- Deadline approaching
+- Highest stipend
+- Most relevant
+
+Internship cards must show:
+- Company logo
+- Internship title
+- Company name
+- Location
+- Work mode
+- Duration
+- Stipend
+- Required skills
+- Posted date
+- Application deadline
+- Apply button
+- Save button
+
+Only approved, published and currently open internships should appear in normal public discovery.
+
+Add:
+- Pagination or efficient load-more functionality
+- Filter reset
+- Empty search state
+- Loading skeletons
+
+## 6.4 Internship Details
+
+Create a detailed internship page.
+
+Display:
+- Internship overview
+- Company information
+- Responsibilities
+- Required skills
+- Eligibility
+- Duration
+- Stipend
+- Work mode
+- Location
+- Number of openings
+- Application deadline
+- Required documents
+- Application instructions
+
+Show an Apply Now button only when the student is eligible and the application window is open.
+
+## 6.5 Internship Application
+
+Build an actual application workflow.
+
+On clicking Apply:
+1. Verify authentication.
+2. Verify student profile.
+3. Check internship status.
+4. Check application deadline.
+5. Check eligibility.
+6. Prevent duplicate applications.
+7. Request required application information.
+8. Allow resume selection.
+9. Allow a cover letter or application message.
+10. Show a review screen.
+11. Submit application.
+12. Store the application in Firestore.
+13. Generate an in-app notification.
+14. Update relevant dashboard statistics.
+
+Application statuses:
+
+- Applied
+- Under Review
+- Shortlisted
+- Interview Scheduled
+- Selected
+- Rejected
+- Withdrawn
+
+Maintain an application status history with timestamps and authorized actors.
+
+## 6.6 My Applications
+
+Build an application management page.
+
+Provide:
+- List view
+- Status filters
+- Search
+- Company information
+- Application date
+- Current status
+- Last updated
+- View details
+- Withdraw application when permitted
+
+Create a visually clear application timeline.
+
+Example:
+
+Applied → Under Review → Shortlisted → Interview → Selected
+
+Rejected applications should display their final status separately.
+
+## 6.7 Saved Internships
+
+Allow students to:
+- Bookmark internships.
+- Remove bookmarks.
+- Open saved internship details.
+- Apply directly from saved listings.
+
+Persist saved records in Firestore.
+
+## 6.8 Interviews
+
+Show:
+- Interview title
+- Company
+- Internship
+- Interview date
+- Interview time
+- Interview mode
+- Meeting link
+- Instructions
+- Current interview status
+
+Provide a calendar-style view and an upcoming interview list.
+
+## 6.9 Internship Progress
+
+Once selected, students should see their internship progress.
+
+Features:
+- Internship start and end dates
+- Assigned mentor
+- Current internship status
+- Milestones
+- Weekly progress updates
+- Document submissions
+- Completion confirmation
+- Feedback
+
+## 6.10 Student Notifications
+
+Build an in-app notification center.
+
+Notifications for:
+- Application submitted
+- Application shortlisted
+- Interview scheduled
+- Interview updated
+- Application selected
+- Application rejected
+- Internship deadline reminders
+- Internship completion updates
+
+Features:
+- Unread indicator
+- Mark as read
+- Mark all as read
+- Notification history
+- Relevant page navigation
+
+# 7. COMPANY / RECRUITER PORTAL
+
+Build a dedicated recruiter dashboard.
+
+Sidebar:
+- Overview
+- Company Profile
+- My Internships
+- Post Internship
+- Applicants
+- Shortlisted Candidates
+- Interviews
+- Internship Progress
+- Feedback
+- Notifications
+- Settings
+
+Recruiter dashboard metrics:
+- Total internships
+- Active internships
+- Total applicants
+- Shortlisted candidates
+- Interviews scheduled
+- Selected candidates
+
+Display:
+- Application trends
+- Recent applicants
+- Internship performance
+- Upcoming interviews
+- Recruitment pipeline
+
+## 7.1 Company Profile
+
+Fields:
+- Company name
+- Company logo
+- Website
+- Industry
+- Company size
+- Headquarters
+- Description
+- Contact person
+- Official email
+- Phone
+- LinkedIn
+- Company verification status
+
+Allow editing and saving.
+
+Company verification must be controlled by administrators.
+
+Unverified companies must not be able to publish public internship opportunities.
+
+## 7.2 Post Internship
+
+Build a comprehensive internship creation form.
+
+Fields:
+- Internship title
+- Category
+- Description
+- Responsibilities
+- Required skills
+- Eligibility criteria
+- Minimum CGPA
+- Eligible branches
+- Eligible semesters
+- Eligible graduation years
+- Duration
+- Stipend
+- Location
+- Work mode
+- Number of openings
+- Application deadline
+- Start date
+- Required documents
+- Contact instructions
+
+Buttons:
+- Save Draft
+- Submit for Approval
+
+Validate all mandatory fields.
+
+Internship statuses:
+- Draft
+- Pending Approval
+- Approved
+- Rejected
+- Published
+- Closed
+- Expired
+
+Recruiters must be able to edit drafts and permitted postings, close opportunities and see rejection reasons.
+
+## 7.3 Manage Internships
+
+Display all company internships in a table.
+
+Columns:
+- Internship
+- Status
+- Applications
+- Deadline
+- Created date
+- Actions
+
+Actions:
+- View
+- Edit
+- Close
+- Delete draft
+
+Show application counts based on real records.
+
+## 7.4 Applicant Management
+
+This is a major feature.
+
+Display candidates who applied to the recruiter's internships.
+
+Applicant table:
+- Student name
+- College
+- Branch
+- CGPA
+- Skills
+- Internship
+- Application date
+- Current status
+- Actions
+
+Features:
+- Search applicants
+- Filter by internship
+- Filter by application status
+- Filter by skills
+- Sort by CGPA
+- Open student profile
+- Preview/download resume
+- Review cover letter
+- Shortlist
+- Reject
+- Schedule interview
+- Update selection
+
+Provide an applicant details drawer or page.
+
+Never expose private student records to unrelated companies.
+
+## 7.5 Recruitment Pipeline
+
+Create a visual recruitment pipeline.
+
+Columns:
+- Applied
+- Under Review
+- Shortlisted
+- Interview Scheduled
+- Selected
+- Rejected
+
+Allow recruiters to change application status using explicit action buttons or a controlled drag-and-drop interface.
+
+Every status change must:
+- Validate the transition.
+- Persist in Firestore.
+- Record history.
+- Notify the student.
+- Refresh the recruiter dashboard.
+
+## 7.6 Interview Scheduling
+
+Form:
+- Candidate
+- Internship
+- Interview date
+- Start time
+- End time
+- Mode
+- Meeting link or venue
+- Interviewer
+- Instructions
+
+After saving:
+- Store interview record.
+- Link it to the application.
+- Change the application status to Interview Scheduled.
+- Notify the student.
+- Display it in both portals.
+
+Prevent invalid interview dates and times.
+
+## 7.7 Feedback and Selection
+
+Recruiters can:
+- Record interview feedback.
+- Add evaluation notes.
+- Update final selection.
+- Mark candidates selected or rejected.
+- Record joining information where appropriate.
+
+# 8. ADMINISTRATOR PORTAL
+
+Create a powerful administrative dashboard.
+
+Sidebar:
+- Overview
+- Students
+- Companies
+- Company Verification
+- Internship Approvals
+- All Internships
+- Applications
+- Interviews
+- Internship Monitoring
+- Reports & Analytics
+- Notifications
+- Settings
+
+Admin dashboard:
+
+Metrics:
+- Total students
+- Total companies
+- Verified companies
+- Pending verifications
+- Total internships
+- Pending internship approvals
+- Total applications
+- Selected students
+
+Charts:
+- Applications over time
+- Internships by category
+- Student application distribution
+- Selection statistics
+- Company recruitment activity
+
+Recent activity:
+- New registrations
+- Company verification requests
+- New internship submissions
+- Application updates
+
+All metrics must derive from actual Firestore records.
+
+## 8.1 Student Management
+
+Features:
+- View all students
+- Search
+- Filter
+- View profiles
+- View applications
+- Activate/deactivate accounts
+- Review account details
+
+Protect existing data when deactivating accounts.
+
+## 8.2 Company Management
+
+Features:
+- View companies
+- Search
+- Filter by verification status
+- View company profiles
+- Verify companies
+- Reject verification requests
+- Suspend accounts where justified
+
+Verification process:
+1. Company registers.
+2. Company completes its profile.
+3. Verification request becomes available to admin.
+4. Admin reviews the information.
+5. Admin approves or rejects.
+6. Company receives notification.
+7. Approved company can submit internships.
+
+Record verification timestamps and administrator actions.
+
+## 8.3 Internship Approval
+
+Create a dedicated approval queue.
+
+Admin can:
+- Review internship details.
+- Review company verification.
+- Approve internship.
+- Reject internship with reason.
+- View pending submissions.
+- Review previously approved opportunities.
+- Close or suspend suspicious postings.
+
+An internship must not become publicly discoverable before approval.
+
+## 8.4 Application Monitoring
+
+Admin can view:
+- All applications
+- Student information
+- Company information
+- Internship
+- Application date
+- Status
+- Status history
+
+Filters:
+- Student
+- Company
+- Internship
+- Status
+- Date range
+
+Admin can investigate records but should not silently alter recruiter decisions.
+
+## 8.5 Internship Completion Monitoring
+
+Track:
+- Selected students
+- Internship start date
+- Expected end date
+- Actual completion date
+- Mentor information
+- Progress status
+- Submitted documents
+- Final feedback
+
+Statuses:
+- Not Started
+- In Progress
+- Completed
+- Incomplete
+
+## 8.6 Reports and Analytics
+
+Create an analytics module with date filters.
+
+Reports:
+- Student registration report
+- Company registration report
+- Verified companies
+- Internship posting report
+- Applications report
+- Selection report
+- Internship completion report
+
+Provide:
+- Charts
+- Summary metrics
+- Searchable tables
+- CSV export
+- Printable report view
+- PDF export if stable within the implementation time
+
+Use actual database information.
+
+# 9. DATABASE DESIGN
+
+Design a consistent Firestore schema.
+
+Use the following primary collections:
+
+1. users
+2. studentProfiles
+3. companyProfiles
+4. internships
+5. applications
+6. interviews
+7. notifications
+8. savedInternships
+9. internshipProgress
+10. feedback
+11. activityLogs
+12. systemSettings
+
+Suggested document structures:
+
+USERS:
+- uid
+- fullName
+- email
+- role
+- accountStatus
+- emailVerified
+- createdAt
+- updatedAt
+
+STUDENT PROFILES:
+- uid
+- phone
+- college
+- course
+- branch
+- semester
+- graduationYear
+- cgpa
+- skills
+- projects
+- certifications
+- experience
+- resumePath
+- socialLinks
+- profileCompletion
+
+COMPANY PROFILES:
+- uid
+- companyName
+- officialEmail
+- website
+- industry
+- companySize
+- headquarters
+- description
+- logoPath
+- verificationStatus
+- verificationReason
+- verifiedAt
+
+INTERNSHIPS:
+- internshipId
+- companyId
+- companyName
+- title
+- category
+- description
+- responsibilities
+- skills
+- eligibility
+- duration
+- stipend
+- location
+- workMode
+- openings
+- deadline
+- startDate
+- status
+- approvalStatus
+- createdAt
+- updatedAt
+
+APPLICATIONS:
+- applicationId
+- internshipId
+- studentId
+- companyId
+- resumePath
+- coverLetter
+- status
+- appliedAt
+- updatedAt
+- statusHistory
+
+INTERVIEWS:
+- interviewId
+- applicationId
+- studentId
+- companyId
+- internshipId
+- interviewDate
+- startTime
+- endTime
+- mode
+- meetingLink
+- venue
+- interviewer
+- instructions
+- status
+
+NOTIFICATIONS:
+- notificationId
+- recipientId
+- title
+- message
+- type
+- relatedEntityId
+- read
+- createdAt
+
+SAVED INTERNSHIPS:
+- savedId
+- studentId
+- internshipId
+- savedAt
+
+INTERNSHIP PROGRESS:
+- progressId
+- applicationId
+- studentId
+- companyId
+- internshipId
+- mentor
+- startDate
+- endDate
+- progressStatus
+- milestones
+- documents
+- updatedAt
+
+FEEDBACK:
+- feedbackId
+- applicationId
+- internshipId
+- studentId
+- companyId
+- rating
+- comments
+- submittedAt
+
+ACTIVITY LOGS:
+- activityId
+- actorId
+- actorRole
+- action
+- entityType
+- entityId
+- timestamp
+
+Use server timestamps and consistent identifiers.
+
+Add Firestore indexes for common queries.
+
+Avoid unnecessary duplication. Where denormalized display fields are useful for efficient queries, keep them synchronized through controlled backend operations.
+
+Use pagination for large lists.
+
+# 10. BACKEND AND API ARCHITECTURE
+
+Create clean, reusable server-side service modules.
+
+Organize code into logical domains:
+
+- Authentication
+- Users
+- Students
+- Companies
+- Internships
+- Applications
+- Interviews
+- Notifications
+- Reports
+- Internship progress
+- Administration
+
+All write operations must validate:
+- Authentication
+- User role
+- Record ownership
+- Required fields
+- Allowed status transitions
+- Record existence
+- Duplicate conditions
+
+Use structured error responses.
+
+Do not implement critical operations solely through frontend state changes.
+
+Avoid putting all logic into one giant component or one API file.
+
+Create reusable:
+- Database service functions
+- Validation schemas
+- Authentication helpers
+- Role guards
+- Shared types
+- Form components
+- Table components
+- Status badges
+- Notification utilities
+
+# 11. NOTIFICATION SYSTEM
+
+Build a centralized in-app notification system.
+
+Events must automatically generate notifications.
+
+Examples:
+
+Student applies:
+- Notify the relevant company.
+
+Company shortlists student:
+- Notify the student.
+
+Company schedules interview:
+- Notify the student.
+
+Company selects or rejects:
+- Notify the student.
+
+Admin approves internship:
+- Notify the company.
+
+Admin verifies company:
+- Notify the company.
+
+Company submits internship:
+- Notify the admin.
+
+Use persistent Firestore notifications.
+
+Show unread notification counts in navigation.
+
+Where real-time Firestore listeners are suitable, update notification lists without requiring page refreshes.
+
+Email integration may be added if credentials are available, but do not claim an email was sent if no email provider is configured.
+
+# 12. UI COMPONENT ARCHITECTURE
+
+Create a reusable design system.
+
+Components:
+- PublicNavbar
+- DashboardLayout
+- Sidebar
+- Topbar
+- UserAvatar
+- StatCard
+- DataTable
+- SearchBar
+- FilterPanel
+- InternshipCard
+- InternshipStatusBadge
+- ApplicationTimeline
+- ApplicantCard
+- InterviewCard
+- NotificationDropdown
+- ProfileCompletion
+- UploadField
+- ConfirmDialog
+- EmptyState
+- ErrorState
+- LoadingSkeleton
+- Pagination
+- FormField
+- ChartCard
+
+Maintain consistent layouts across student, recruiter and admin portals.
+
+Do not duplicate entire components unnecessarily.
+
+# 13. RESPONSIVE DESIGN
+
+The entire application must work on:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+Mobile requirements:
+- Collapsible navigation
+- Mobile-friendly forms
+- Responsive cards
+- Horizontally scrollable tables where necessary
+- Readable charts
+- Touch-friendly controls
+- No horizontal overflow
+- Appropriate mobile typography
+
+# 14. SECURITY AND RELIABILITY
+
+Implement:
+- Secure authentication
+- Server-side authorization
+- Firestore Security Rules
+- Firebase Storage Security Rules
+- Input validation
+- File upload validation
+- Safe error handling
+- Protection against unauthorized role changes
+- Protection against duplicate applications
+- Protection against cross-company data access
+- Safe account deactivation
+- Activity logging for sensitive administrator operations
+
+Never place admin credentials or privileged service account keys in frontend code.
+
+Never trust frontend-supplied user IDs for ownership verification.
+
+Use HTTPS in deployment.
+
+# 15. PERFORMANCE AND QUALITY
+
+Follow these performance requirements:
+
+- Lazy-load routes and heavy components.
+- Optimize image dimensions.
+- Avoid unnecessarily large animation libraries.
+- Avoid repeated Firestore reads.
+- Use efficient query patterns.
+- Add database indexes as needed.
+- Use pagination.
+- Use loading skeletons.
+- Avoid blocking the entire dashboard while one section loads.
+- Use proper caching where safe.
+- Respect reduced-motion accessibility settings.
+- Avoid layout shifts.
+- Keep the mobile experience fast.
+
+The application should be modular and maintainable so additional modules can be introduced later.
+
+# 16. DEMONSTRATION DATA
+
+Create realistic seed/demo data to make the system demonstrable.
+
+Include:
+- At least 12 sample students.
+- At least 6 sample companies.
+- At least 12 internships across different categories.
+- At least 20 sample applications in different stages.
+- At least 5 interview records.
+- Relevant notifications.
+- Sample internship progress records.
+
+Use fictional people and companies, clearly marked as demo records.
+
+Never create fake live user metrics or mix sample data with actual records without labeling them.
+
+Provide a safe admin provisioning method and a README explaining how to create the first administrator.
+
+If practical, provide a demo-data seeding script that can be run more than once without duplicating records.
+
+Do not expose hardcoded production credentials.
+
+# 17. TESTING AND VALIDATION
+
+Before considering the project complete, test the following workflows:
+
+TEST 1: Student registration
+- Create a student account.
+- Complete the student profile.
+- Upload a resume.
+- Verify that the data persists after refresh.
+
+TEST 2: Company registration
+- Create a company account.
+- Complete its profile.
+- Submit verification.
+- Verify that the admin can review it.
+
+TEST 3: Internship publishing
+- Admin verifies the company.
+- Company creates an internship.
+- Company submits it for approval.
+- Admin approves it.
+- Verify that it appears in student discovery.
+
+TEST 4: Internship application
+- Student opens the internship.
+- Student applies using a resume.
+- Verify that the application appears in the company dashboard.
+- Verify that the application is stored in Firestore.
+
+TEST 5: Recruitment workflow
+- Recruiter reviews the application.
+- Recruiter shortlists the student.
+- Verify that the status changes.
+- Verify that the student receives a notification.
+
+TEST 6: Interview
+- Recruiter schedules an interview.
+- Verify that the interview appears in both dashboards.
+- Verify that the application status is updated.
+
+TEST 7: Selection
+- Recruiter selects the candidate.
+- Verify that the student receives the selection notification.
+- Verify that the admin can see the selection.
+
+TEST 8: Authorization
+- Student attempts to access admin routes.
+- Recruiter attempts to access another company's private applications.
+- Student attempts to modify application status directly.
+- Verify that unauthorized operations are blocked.
+
+TEST 9: Data persistence
+- Refresh every dashboard.
+- Log out and log back in.
+- Verify that actual records remain available.
+
+TEST 10: Responsive design
+- Test the landing page and dashboards at desktop and mobile widths.
+
+Fix all critical errors discovered during testing.
+
+# 18. PROJECT STRUCTURE AND DOCUMENTATION
+
+Organize the application into a clean project structure.
+
+Separate:
+- Pages
+- Components
+- Layouts
+- Hooks
+- Context
+- Types
+- Services
+- Firebase configuration
+- Backend routes
+- Validation schemas
+- Utilities
+- Styles
+
+Create a README containing:
+
+1. Project overview
+2. Problem statement
+3. Features
+4. Technology stack
+5. Application architecture
+6. Database design
+7. Authentication and role management
+8. Installation instructions
+9. Environment variables
+10. Firebase configuration
+11. Admin provisioning
+12. Demo data setup
+13. Testing instructions
+14. Deployment instructions
+
+# 19. EXECUTION STRATEGY — IMPORTANT
+
+You have a very limited development window.
+
+Work in the following priority order:
+
+PHASE 1 — FOUNDATION
+- Initialize the project.
+- Configure the design system.
+- Configure Firebase.
+- Implement authentication.
+- Implement protected routing.
+- Establish the database architecture.
+
+PHASE 2 — CORE FUNCTIONALITY
+- Student portal.
+- Company portal.
+- Admin portal.
+- Internship management.
+- Applications.
+- Recruitment pipeline.
+
+PHASE 3 — CONNECTED WORKFLOWS
+- Interview scheduling.
+- Notifications.
+- Company verification.
+- Internship approval.
+- Internship progress.
+
+PHASE 4 — POLISH
+- Analytics.
+- Reports.
+- Landing-page animation.
+- Video hero.
+- Responsive improvements.
+- Demo data.
+
+PHASE 5 — VALIDATION
+- Run the application.
+- Fix build errors.
+- Test important workflows.
+- Verify persistence.
+- Verify role-based permissions.
+- Complete the README.
+
+IMPORTANT EXECUTION RULES:
+
+1. Do not stop after generating the landing page.
+2. Do not stop after creating the dashboards.
+3. Do not create non-functional buttons.
+4. Do not use localStorage as a substitute for the real database.
+5. Do not simulate successful authentication.
+6. Do not create disconnected frontend-only features.
+7. Do not skip the administrator portal.
+8. Do not ask for approval after every small component.
+9. Make reasonable engineering decisions and continue implementation.
+10. If a feature cannot be fully integrated because an external credential is unavailable, implement the correct integration boundary and clearly document the missing configuration.
+11. Prioritize working end-to-end workflows over decorative features.
+12. Never remove an already-working feature while implementing another module.
+13. Maintain a consistent design system across every route.
+14. Keep the project runnable throughout development.
+15. Do not declare completion until the build has been checked and the critical user workflows have been tested.
+
+# 20. FINAL ACCEPTANCE CRITERIA
+
+The finished application must satisfy all of these:
+
+- A professional public landing page.
+- Functional student registration and login.
+- Functional recruiter registration and login.
+- Secure administrator access.
+- Three independent role-based dashboards.
+- Student profile management.
+- Resume uploads.
+- Internship discovery and filtering.
+- Internship application submission.
+- Saved internships.
+- Application status tracking.
+- Company profile and verification.
+- Internship posting and approval.
+- Applicant management.
+- Shortlisting and rejection.
+- Interview scheduling.
+- Persistent in-app notifications.
+- Internship progress tracking.
+- Admin management.
+- Reports and analytics.
+- Responsive design.
+- Database persistence.
+- Proper security rules.
+- Consistent UI and navigation.
+- No critical build errors.
+
+FINAL INSTRUCTION:
+
+Start by inspecting the available development environment and configuring the complete application architecture.
+
+Then implement the project directly in the workspace.
+
+Build InternFlow as one coherent, interconnected product—not as separate demonstrations of individual features.
+
+The most important success criterion is that a student, recruiter and administrator can log in using their respective accounts and complete a real end-to-end internship management workflow.
+
+Deliver a working, polished, demonstrable full-stack application.
